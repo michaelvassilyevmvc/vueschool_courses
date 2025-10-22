@@ -10,7 +10,10 @@ const items = ref([
 ])
 const newItem = ref('')
 const newItemPriority = ref('low')
-const iceCreamFavors = ref([])
+const saveItem = () => {
+  items.value.push({id:items.value.length+1,label:newItem.value });
+  newItem.value = ''
+}
 </script>
 
 
@@ -18,7 +21,7 @@ const iceCreamFavors = ref([])
   <div>
     <h1>{{ header }}</h1>
     <form class="add-item-form"
-      @submit.prevent="items.push({id:items.length+1,label:newItem })"
+      @submit.prevent="saveItem"
     >
       <input
              type="text"
