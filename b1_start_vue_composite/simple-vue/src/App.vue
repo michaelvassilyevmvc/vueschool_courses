@@ -45,6 +45,7 @@ const doEdit = (e) => {
       </select>
       <br>
       <button type="submit"
+              :disabled="newItem.length < 5"
               class="btn btn-primary">Save Item
       </button>
     </form>
