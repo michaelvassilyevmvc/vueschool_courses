@@ -1,6 +1,13 @@
 <template>
   <div class="plans">
-    <CoffeePlan v-for="plan in plans" :name="plan" :key="plan" />
+    {{ selectedCoffeePlan}}
+    <CoffeePlan
+      v-for="plan in plans"
+      :name="plan"
+      :key="plan"
+      :selected="plan === selectedCoffeePlan"
+      @click="handleSelectedCoffeePlan(plan)"
+    />
   </div>
 </template>
 
@@ -9,6 +16,11 @@ import CoffeePlan from '@/components/CoffeePlan.vue'
 
 import { ref } from 'vue'
 const plans = ref(['The Single', 'The Curious', 'The Addict', 'The Hacker'])
+
+const selectedCoffeePlan = ref()
+function handleSelectedCoffeePlan(name){
+  selectedCoffeePlan.value = name
+}
 </script>
 
 <style scoped></style>
