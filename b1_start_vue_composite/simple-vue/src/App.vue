@@ -1,6 +1,6 @@
 <script setup>
 import './assets/main.css'
-import {ref} from 'vue'
+import {ref, computed} from 'vue'
 
 const header = ref('Shopping List App')
 const editing = ref(false)
@@ -9,6 +9,7 @@ const items = ref([
   {id: 2, label: "2 board games", purchased: true, highPriority: false},
   {id: 3, label: "20 cups", purchased: false, highPriority: true}
 ])
+const reverseItems = computed(() => [...items.value].reverse())
 const newItem = ref('')
 // const newItemPriority = ref('low')
 const newItemHighPriority = ref(false)
@@ -16,7 +17,8 @@ const saveItem = () => {
   items.value.push({
     id: items.value.length + 1,
     label: newItem.value,
-    highPriority: newItemHighPriority.value});
+    highPriority: newItemHighPriority.value
+  });
   newItem.value = ''
   newItemHighPriority.value = false
 
@@ -48,12 +50,12 @@ const togglePurchased = (item) => {
           type="text"
           v-model.trim="newItem"
           placeholder="Add an item"/>
-<!--      <select v-model="newItemPriority">-->
-<!--        <option value="low">low</option>-->
-<!--        <option value="high">high</option>-->
-<!--      </select>-->
+      <!--      <select v-model="newItemPriority">-->
+      <!--        <option value="low">low</option>-->
+      <!--        <option value="high">high</option>-->
+      <!--      </select>-->
       <label style="padding-right:20px; display: inline-block;"> High Priority:
-      <input type="checkbox" v-model="newItemHighPriority" />
+        <input type="checkbox" v-model="newItemHighPriority"/>
       </label>
       <br>
       <button type="submit"
@@ -61,7 +63,7 @@ const togglePurchased = (item) => {
       </button>
     </form>
     <ul>
-      <li v-for="item in items"
+      <li v-for="item in reverseItems"
           @click="togglePurchased(item)"
           :key="item.id"
           class="static-class"
