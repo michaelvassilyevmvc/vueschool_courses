@@ -6,7 +6,7 @@
       :name="plan"
       :key="plan"
       :selected="plan === selectedCoffeePlan"
-      @click="handleSelectedCoffeePlan(plan)"
+      @selected="handleSelectedCoffeePlan(plan)"
     />
   </div>
 </template>
@@ -15,7 +15,7 @@
 import CoffeePlan from '@/components/CoffeePlan.vue'
 
 import { ref } from 'vue'
-const plans = ref(['The Single', 'The Curious', 'The Addict', 'The Hacker'])
+const plans = ref(['The Single', 'The Curious', 'The Addict', 'Hacker'])
 
 const selectedCoffeePlan = ref()
 function handleSelectedCoffeePlan(name){
