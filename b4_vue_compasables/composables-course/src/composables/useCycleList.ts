@@ -1,11 +1,11 @@
-import { ref, computed } from 'vue'
+import { ref, computed, type Ref } from 'vue'
 
-export const useCycleList = (list: any[]) => {
+export const useCycleList = (list: Ref<any[]>) => {
   const activeIndex = ref(0)
-  const state = computed(() => list[activeIndex.value])
+  const state = computed(() => list.value[activeIndex.value])
 
   function next() {
-    if (activeIndex.value === list.length - 1) {
+    if (activeIndex.value === list.value.length - 1) {
       activeIndex.value = 0
     } else {
       activeIndex.value++
@@ -13,7 +13,7 @@ export const useCycleList = (list: any[]) => {
   }
   function prev() {
     if (activeIndex.value === 0) {
-      activeIndex.value = list.length - 1
+      activeIndex.value = list.value.length - 1
     } else {
       activeIndex.value--
     }

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useCycleList } from '@/composables/useCycleList.ts'
-
-const { state, prev, next } = useCycleList(['Dog', 'Cat', 'Bird', 'Iguana'])
+import { ref } from 'vue'
+const animals = ref(['Dog', 'Cat', 'Bird', 'Iguana'])
+const { state, prev, next } = useCycleList(animals)
 </script>
 
 <template>
