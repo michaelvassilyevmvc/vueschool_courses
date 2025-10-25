@@ -1,19 +1,19 @@
 import { ref, computed, toRef, type MaybeRefOrGetter } from 'vue'
 
-export interface useCycleListConfig{
-  fallbackIndex?: number;
-  fallbackValue?: any;
+export interface useCycleListConfig {
+  fallbackIndex?: number
+  fallbackValue?: any
 }
 
 export const useCycleListConfigDefaults: useCycleListConfig = {
   fallbackIndex: undefined,
-  fallbackValue: undefined
+  fallbackValue: undefined,
 }
 
 export const useCycleList = (list: MaybeRefOrGetter<any[]>, config?: useCycleListConfig) => {
   const _config = {
     ...useCycleListConfigDefaults,
-    ...config
+    ...config,
   }
   const activeIndex = ref(0)
   const _list = toRef(list)
@@ -26,9 +26,14 @@ export const useCycleList = (list: MaybeRefOrGetter<any[]>, config?: useCycleLis
       if (foundIndex >= 0) {
         activeIndex.value = foundIndex
       } else {
-        throw Error(
-          `${value} is not found in the useCycleList list and cannot be set with state.value === ''`,
-        )
+        const foundFallbackValueIndex = _list.value.indexOf(_config.fallbackValue)
+        if (foundFallbackValueIndex === -1) {
+          throw Error(
+            `${value} is not found in the useCycleList list and cannot be set with state.value === ''`,
+          )
+        } else {
+          activeIndex.value = foundFallbackValueIndex
+        }
       }
     },
   })
@@ -48,10 +53,24 @@ export const useCycleList = (list: MaybeRefOrGetter<any[]>, config?: useCycleLis
     }
   }
 
+  function go(index: number) {
+    if (index >= _list.value.length) {
+      if (typeof _config.fallbackIndex !== 'undefined') {
+        activeIndex.value = _config.fallbackIndex
+      } else {
+        throw new Error(
+          `Cannot go to index ${index}. The list provided to useCycleList is not that long.`,
+        )
+      }
+    } else {
+      activeIndex.value = index
+    }
+  }
+
   return {
     state,
     prev,
     next,
-    go: () => {},
+    go,
   }
 }

@@ -3,10 +3,10 @@ import { useCycleList } from '@/composables/useCycleList.ts'
 import { ref } from 'vue'
 const animals = ref(['Dog', 'Cat', 'Bird', 'Iguana'])
 const { state, prev, next } = useCycleList(animals, {
-  fallbackIndex: 0
+  fallbackValue: 'Bird'
 })
 
-state.value = 'Cat';
+state.value = 'Cattt';
 
 </script>
 
