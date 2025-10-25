@@ -1,11 +1,12 @@
-import { ref, computed, type Ref } from 'vue'
+import { ref, computed, toRef, type MaybeRefOrGetter } from 'vue'
 
-export const useCycleList = (list: Ref<any[]>) => {
+export const useCycleList = (list: MaybeRefOrGetter<any[]>) => {
   const activeIndex = ref(0)
-  const state = computed(() => list.value[activeIndex.value])
+  const _list = toRef(list)
+  const state = computed(() => _list.value[activeIndex.value])
 
   function next() {
-    if (activeIndex.value === list.value.length - 1) {
+    if (activeIndex.value === _list.value.length - 1) {
       activeIndex.value = 0
     } else {
       activeIndex.value++
@@ -13,7 +14,7 @@ export const useCycleList = (list: Ref<any[]>) => {
   }
   function prev() {
     if (activeIndex.value === 0) {
-      activeIndex.value = list.value.length - 1
+      activeIndex.value = _list.value.length - 1
     } else {
       activeIndex.value--
     }
