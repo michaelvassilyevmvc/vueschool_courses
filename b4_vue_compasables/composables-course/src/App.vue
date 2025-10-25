@@ -2,12 +2,13 @@
 import { useCycleList } from '@/composables/useCycleList.ts'
 import { ref } from 'vue'
 const animals = ref(['Dog', 'Cat', 'Bird', 'Iguana'])
-const { state, prev, next } = useCycleList(animals, {
+const { state, prev, next, go } = useCycleList(animals, {
   fallbackValue: 'Bird'
 })
 
 state.value = 'Cattt';
 
+const goTo = ref(0)
 </script>
 
 <template>
@@ -16,6 +17,9 @@ state.value = 'Cattt';
     <br />
       <button @click="prev">Previous</button>
       <button @click="next">Next</button>
+    <br>
+    <input type="number" v-model="goTo" />
+    <button @click="go(goTo)">Go To {{goTo}}</button>
   </div>
 </template>
 
