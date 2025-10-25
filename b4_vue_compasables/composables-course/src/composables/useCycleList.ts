@@ -19,10 +19,15 @@ export const useCycleList = (list: any[]) => {
     }
   }
 
+  function go(index: number) {
+
+    activeIndex.value = list.length - 1 >= index  ? index : index - activeIndex.value - 1
+  }
+
   return {
     state,
     prev,
     next,
-    go: () => {},
+    go
   }
 }

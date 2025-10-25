@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { useCycleList } from '@/composables/useCycleList.ts'
+import { ref } from 'vue'
+const goIndex = ref(0)
+const { state, prev, next,go } = useCycleList(['Dog', 'Cat', 'Bird', 'Iguana'])
 
-const { state, prev, next } = useCycleList(['Dog', 'Cat', 'Bird', 'Iguana'])
+const goTo = () => go(goIndex.value)
 </script>
 
 <template>
@@ -10,6 +13,7 @@ const { state, prev, next } = useCycleList(['Dog', 'Cat', 'Bird', 'Iguana'])
     <br />
       <button @click="prev">Previous</button>
       <button @click="next">Next</button>
+      <input type="number" @keyup.enter.prevent="goTo" v-model="goIndex" />
   </div>
 </template>
 
