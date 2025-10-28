@@ -1,0 +1,38 @@
+<template>
+  <button @click="showMenu = !showMenu">
+    {{ showMenu ? 'Hide' : 'Show' }}
+    Menu
+  </button>
+  <Transition>
+    <ul v-if="showMenu">
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+    </ul>
+  </Transition>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+const showMenu = ref(false)
+</script>
+
+<style  scoped>
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+}
+
+.v-enter-from {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.v-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+</style>
