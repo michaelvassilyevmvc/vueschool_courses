@@ -1,9 +1,9 @@
 <script setup>
-import SimpleTrans from '@/components/SimpleTrans.vue'
+import ModalComponent from '@/components/ModalComponent.vue'
 </script>
 
 <template>
-  <SimpleTrans />
+  <ModalComponent />
 </template>
 
 <style scoped>
