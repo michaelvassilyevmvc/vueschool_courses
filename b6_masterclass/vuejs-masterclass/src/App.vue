@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { supabase } from '@/lib/supabaseClient'
 
+console.log(supabase)
 </script>
 
 <template>
@@ -8,5 +10,4 @@
   </main>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
