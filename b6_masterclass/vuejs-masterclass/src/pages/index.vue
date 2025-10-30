@@ -1,12 +1,20 @@
 <template>
   <div>
     <h1>Home Page</h1>
-    <RouterLink :to="{ name: '/projects/[id]', params: { id: 1 } }">
-      Go to project 1
-    </RouterLink>
+    <RouterLink :to="{ name: '/projects/[id]', params: { id: 1 } }"> Go to project 1 </RouterLink>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { supabase } from '@/lib/supabaseClient'
+
+const getProjects = async () => {
+  const { data, error } = await supabase.from('projects').select()
+  if (error) {
+    console.log(error)
+  }
+  console.log('Projects: ', data)
+}
+</script>
 
 <style scoped></style>
