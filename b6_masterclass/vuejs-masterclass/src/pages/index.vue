@@ -8,13 +8,18 @@
 <script setup lang="ts">
 import { supabase } from '@/lib/supabaseClient'
 
-const getProjects = async () => {
-  const { data, error } = await supabase.from('projects').select()
-  if (error) {
-    console.log(error)
+
+
+;(
+  async () => {
+    const { data, error } = await supabase.from('projects').select()
+    if (error) {
+      console.log(error)
+    }
+    console.log('Projects: ', data)
   }
-  console.log('Projects: ', data)
-}
+)()
+
 </script>
 
 <style scoped></style>
