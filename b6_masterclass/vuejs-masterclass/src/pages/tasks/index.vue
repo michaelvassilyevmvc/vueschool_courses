@@ -10,20 +10,29 @@ import { RouterLink } from 'vue-router'
 
 const tasks = ref<Tables<'tasks'>[] | null>(null)
 
-;(async () => {
+const getTasks = async () => {
   const { data, error } = await supabase.from('tasks').select()
   if (error) {
     console.log(error)
   }
   tasks.value = data
-})()
+}
+
+await getTasks()
 
 const columns: ColumnDef<Tables<'tasks'>>[] = [
   {
     accessorKey: 'name',
     header: () => h('div', { class: 'text-left' }, 'Name'),
     cell: ({ row }) => {
-      return h(RouterLink, { to:`/tasks/${row.original.id}`, class: 'text-left font-medium hover:bg-muted block w-full' }, () => row.getValue('name'))
+      return h(
+        RouterLink,
+        {
+          to: `/tasks/${row.original.id}`,
+          class: 'text-left font-medium hover:bg-muted block w-full'
+        },
+        () => row.getValue('name')
+      )
     }
   },
   {
