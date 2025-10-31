@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 
+usePageStore().pageData.title = 'Home Page'
 </script>
 
 <style scoped></style>
