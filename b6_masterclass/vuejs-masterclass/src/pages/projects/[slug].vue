@@ -1,10 +1,19 @@
 <script setup lang="ts">
 import { projectQuery } from '@/utils/supaQueries'
 import type { Project } from '@/utils/supaQueries'
+import { onMounted } from 'vue'
 
 const route = useRoute('/projects/[slug]')
 
 const project = ref<Project | null>(null)
+
+watch(
+  () => project.value?.name,
+  () => {
+    usePageStore().pageData.title = `Project: ${project.value?.name || ''}`
+  }
+)
+
 const getProjects = async () => {
   const { data, error } = await projectQuery(route.params.slug)
 
