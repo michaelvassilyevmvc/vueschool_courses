@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { projectQuery } from '@/utils/supaQueries'
 import type { Project } from '@/utils/supaQueries'
-import { onMounted } from 'vue'
 
 const route = useRoute('/projects/[slug]')
 
