@@ -12,7 +12,7 @@ export const useProjectsStore = defineStore('projects-store', () => {
           console.log('Cached and fresh data matched!')
           return
         } else {
-          console.log('Something has chaanged')
+          console.log('Something has changed')
           loadProjects.delete('projects')
         }
       })
@@ -25,6 +25,8 @@ export const useProjectsStore = defineStore('projects-store', () => {
       useErrorStore().setError({ error, customCode: status })
     }
     projects.value = data ?? []
+
+    validateCache()
   }
 
   return {
