@@ -9,14 +9,14 @@ import { columns } from '@/utils/tableColumns/projectsColumns'
 
 usePageStore().pageData.title = 'Projects'
 
-const projects = ref<Projects | null>(null)
+const projects = ref<Projects>([])
 
 const getProjects = async () => {
-  const { data, error, status } = await projectsQuery
+  const { data, error, status } = await projectsQuery()
   if (error) {
     useErrorStore().setError({ error, customCode: status })
   }
-  projects.value = data
+    projects.value = data ?? []
 }
 
 await getProjects()

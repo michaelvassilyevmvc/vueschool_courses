@@ -26,8 +26,8 @@ export const taskQuery = (id: string) => {
 export type Task = QueryData<ReturnType<typeof taskQuery>>
 
 
-export const projectsQuery = await supabase.from('projects').select()
-export type Projects = QueryData<typeof projectsQuery>
+export const projectsQuery = () => supabase.from('projects').select()
+export type Projects = QueryData<ReturnType<typeof projectsQuery>>
 
 export const projectQuery = (slug: string) =>  supabase.from('projects').select(`
   *,

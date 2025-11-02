@@ -14,10 +14,7 @@
 const props = defineProps<{
   message: string
   customCode: number
-  code: string
   statusCode: number
-  hint: string | null
-  details: string
   isCustomError: boolean
 }>()
 
