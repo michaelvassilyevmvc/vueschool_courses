@@ -12,8 +12,7 @@ export const useErrorStore = defineStore('error-store', () => {
     error: string | PostgrestError | Error
     customCode?: number
   }) => {
-
-    if(typeof error === 'string') {
+    if (typeof error === 'string') {
       isCustomError.value = true
     }
 
@@ -36,6 +35,10 @@ export const useErrorStore = defineStore('error-store', () => {
     activeError,
     setError,
     isCustomError,
-    clearErrors,
+    clearErrors
   }
 })
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useErrorStore, import.meta.hot))
+}
