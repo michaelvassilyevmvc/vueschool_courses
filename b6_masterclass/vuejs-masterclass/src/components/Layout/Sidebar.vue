@@ -25,9 +25,10 @@
 </template>
 
 <script setup lang="ts">
-const executeAction = (linkTitle: string) => {
-  if(linkTitle === 'Sign Out'){
-    // ....
+const executeAction = async (linkTitle: string) => {
+  if (linkTitle === 'Sign Out') {
+    const { logout } = await import('@/utils/supaAuth')
+    await logout()
   }
 }
 
