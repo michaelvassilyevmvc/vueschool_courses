@@ -1,11 +1,23 @@
 <script setup lang="ts">
 import { login } from '@/utils/supaAuth'
 import { useFormErrors } from '@/composables/formErrors'
+import { watchDebounced } from '@vueuse/core'
 
 const formData = ref({
   email: '',
   password: ''
 })
+
+watchDebounced(
+  formData,
+  () => {
+    handleLoginError(formData.value)
+  },
+  {
+    debounce: 1000,
+    deep: true
+  }
+)
 
 const { serverError, handleServerError, realtimeError, handleLoginError } = useFormErrors()
 
@@ -41,7 +53,6 @@ const signin = async () => {
               required
               v-model="formData.email"
               :class="{ 'border-red-500': serverError }"
-              @input="handleLoginError(formData)"
             />
             <ul class="text-sm text-left text-red-500" v-if="realtimeError?.email.length">
               <li v-for="error in realtimeError?.email" :key="error" class="list-disc">
@@ -61,7 +72,6 @@ const signin = async () => {
               required
               v-model="formData.password"
               :class="{ 'border-red-500': serverError }"
-              @input="handleLoginError(formData)"
             />
             <ul class="text-sm text-left text-red-500" v-if="realtimeError?.password.length">
               <li v-for="error in realtimeError?.password" :key="error" class="list-disc">
