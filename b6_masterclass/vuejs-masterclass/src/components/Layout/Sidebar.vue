@@ -25,7 +25,6 @@
 </template>
 
 <script setup lang="ts">
-
 const links = [
   {
     title: 'Dashboard',
@@ -57,7 +56,6 @@ const accountLinks = [
   },
   {
     title: 'Sign Out',
-    to: '/signout',
     icon: 'lucide:log-out'
   }
 ]
