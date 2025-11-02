@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { supabase } from '@/lib/supabaseClient'
+import { register } from '@/utils/supaAuth'
 
 const formData = ref({
   username: '',
-  firstName: '',
-  lastName: '',
+  firstname: '',
+  lastname: '',
   email: '',
   password: '',
   confirmPassword: ''
@@ -13,24 +13,8 @@ const formData = ref({
 const router = useRouter()
 
 const signup = async () => {
-  const { data, error } = await supabase.auth.signUp({
-    email: formData.value.email,
-    password: formData.value.password
-  })
-
-  if (error) return console.log(error)
-
-  if (data.user) {
-    const { error } = await supabase.from('profiles').insert({
-      id: data.user.id,
-      username: formData.value.username,
-      full_name: formData.value.firstName.concat(' ', formData.value.lastName)
-    })
-
-    if (error) console.log('Profile error: ', error)
-  }
-
-  router.push('/')
+  const isRegistered = await register(formData.value)
+  if (isRegistered) router.push('/')
 }
 </script>
 
@@ -67,7 +51,7 @@ const signup = async () => {
                 type="text"
                 placeholder="John"
                 required
-                v-model="formData.firstName"
+                v-model="formData.firstname"
               />
             </div>
             <div class="grid gap-2">
@@ -77,7 +61,7 @@ const signup = async () => {
                 type="text"
                 placeholder="Doe"
                 required
-                v-model="formData.lastName"
+                v-model="formData.lastname"
               />
             </div>
           </div>
