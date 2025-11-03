@@ -4,6 +4,7 @@ import { RouterLink } from 'vue-router'
 import type { Ref } from 'vue'
 import type { GroupedCollabs } from '@/types/GroupedCollabs'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import AppInPlaceEditStatus from '@/components/AppInPlaceEdit/AppInPlaceEditStatus.vue'
 
 export const columns = (collabs: Ref<GroupedCollabs>): ColumnDef<Projects[0]>[] => [
   {
@@ -24,7 +25,11 @@ export const columns = (collabs: Ref<GroupedCollabs>): ColumnDef<Projects[0]>[] 
     accessorKey: 'status',
     header: () => h('div', { class: 'text-left' }, 'Status'),
     cell: ({ row }) => {
-      return h('div', { class: 'text-left font-medium' }, row.getValue('status'))
+      return h(
+        'div',
+        { class: 'text-left font-medium' },
+        h(AppInPlaceEditStatus, { modelValue: row.original.status })
+      )
     }
   },
   {
@@ -37,7 +42,9 @@ export const columns = (collabs: Ref<GroupedCollabs>): ColumnDef<Projects[0]>[] 
         collabs.value[row.original.id]
           ? collabs.value[row.original.id].map((collab) => {
               return h(RouterLink, { to: `/users/${collab.username}` }, () => {
-                return h(Avatar,{class:'hover:scale-110 transition-transform'}, () => h(AvatarImage, { src: collab.avatar_url || '' }))
+                return h(Avatar, { class: 'hover:scale-110 transition-transform' }, () =>
+                  h(AvatarImage, { src: collab.avatar_url || '' })
+                )
               })
             })
           : row.original.collaborators.map(() => {
