@@ -16,9 +16,7 @@ const { getProjects } = projectsLoader
 await getProjects()
 
 const { getGroupedCollabs, groupedCollabs } = useCollabs()
-await getGroupedCollabs(projects.value)
-
-console.log('TEST:: ', groupedCollabs.value)
+getGroupedCollabs(projects.value)
 
 const columnsWithCollabs = columns(groupedCollabs)
 

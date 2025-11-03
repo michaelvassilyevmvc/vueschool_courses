@@ -3,7 +3,7 @@ import type { Projects } from '@/utils/supaQueries'
 import { RouterLink } from 'vue-router'
 import type { Ref } from 'vue'
 import type { GroupedCollabs } from '@/types/GroupedCollabs'
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 export const columns = (collabs: Ref<GroupedCollabs>): ColumnDef<Projects[0]>[] => [
   {
@@ -34,9 +34,15 @@ export const columns = (collabs: Ref<GroupedCollabs>): ColumnDef<Projects[0]>[] 
       return h(
         'div',
         { class: 'text-left font-medium' },
-        collabs.value[row.original.id].map((collab) => {
-          return h(Avatar, () => h(AvatarImage, { src: collab.avatar_url || '' }))
-        })
+        collabs.value[row.original.id]
+          ? collabs.value[row.original.id].map((collab) => {
+              return h(RouterLink, { to: `/users/${collab.username}` }, () => {
+                return h(Avatar,{class:'hover:scale-110 transition-transform'}, () => h(AvatarImage, { src: collab.avatar_url || '' }))
+              })
+            })
+          : row.original.collaborators.map(() => {
+              return h(Avatar, { class: 'animate-pulse' }, () => h(AvatarFallback))
+            })
       )
     }
   }
