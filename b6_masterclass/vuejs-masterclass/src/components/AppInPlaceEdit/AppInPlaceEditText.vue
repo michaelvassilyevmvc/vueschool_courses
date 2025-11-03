@@ -1,0 +1,13 @@
+<template>
+  <input
+    class="w-full p-1 bg-transparent focus:outline-none focus:border-none focus:bg-gray-800 focus:rounded-md"
+    type="text"
+    v-model="value"
+  />
+</template>
+
+<script setup lang="ts">
+const value = defineModel()
+</script>
+
+<style scoped></style>
