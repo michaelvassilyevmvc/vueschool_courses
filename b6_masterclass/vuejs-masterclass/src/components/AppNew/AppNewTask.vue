@@ -4,7 +4,7 @@
       <SheetHeader>
         <SheetTitle>Create new task</SheetTitle>
       </SheetHeader>
-      <p>Content</p>
+      <FormKit type="text" />
     </SheetContent>
   </Sheet>
 </template>
