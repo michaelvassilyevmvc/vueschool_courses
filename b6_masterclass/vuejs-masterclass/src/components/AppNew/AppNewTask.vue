@@ -4,23 +4,33 @@
       <SheetHeader>
         <SheetTitle>Create new task</SheetTitle>
       </SheetHeader>
-      <FormKit type="form" @submit="createTask" submit-label="Create task">
-        <FormKit type="text" name="name" id="name" label="Name" placeholder="My new task" />
-        <FormKit
-          type="select"
-          name="for"
-          id="for"
-          label="For"
-          placeholder="Select a user"
-          :options="selectOptions.profiles"
+      <FormKit type="form" @submit="createTask" submit-label="Create task" :config="{
+        validationVisibility:'submit'
+      }">
+        <FormKit type="text"
+                 name="name"
+                 id="name"
+                 label="Name"
+                 placeholder="My new task"
+                validation="required|length:1,255"
         />
         <FormKit
           type="select"
-          name="project"
-          id="project"
+          name="profile_id"
+          id="profile_id"
+          label="User"
+          placeholder="Select a user"
+          :options="selectOptions.profiles"
+          validation="required"
+        />
+        <FormKit
+          type="select"
+          name="project_id"
+          id="project_id"
           label="Project"
           placeholder="Select a project"
           :options="selectOptions.projects"
+          validation="required"
         />
         <FormKit
           type="textarea"
@@ -28,6 +38,7 @@
           id="description"
           label="Description"
           placeholder="Task description"
+          validation="length:0,500"
         />
       </FormKit>
     </SheetContent>
@@ -37,7 +48,7 @@
 <script setup lang="ts">
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet'
 import type { CreateNewTask } from '@/types/CreateNewForm'
-import { profileQuery, profilesQuery, projectsQuery } from '@/utils/supaQueries'
+import { createNewTaskQuery, profileQuery, profilesQuery, projectsQuery } from '@/utils/supaQueries'
 
 const sheetOpen = defineModel<boolean>()
 
@@ -75,12 +86,20 @@ const getOptions = async () => {
 
 getOptions()
 
+const { profile } = storeToRefs(useAuthStore())
+
 const createTask = async (formData: CreateNewTask) => {
-  await new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(console.log(formData))
-    }, 2000)
-  })
+  const task = {
+    ...formData,
+    collaborators: [profile.value!.id]
+  }
+
+  const { error } = await createNewTaskQuery(task)
+  if(error) {
+    console.log(error)
+  }
+
+  sheetOpen.value = false;
 }
 </script>
 
