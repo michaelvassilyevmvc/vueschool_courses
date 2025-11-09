@@ -1,25 +1,25 @@
 <template>
-  <DataTable v-if="projects" :columns="columns" :data="projects" />
+  <DataTable v-if="projects" :columns="columnsWithCollabs" :data="projects" />
 </template>
 
 <script setup lang="ts">
-import { projectsQuery } from '@/utils/supaQueries'
-import type { Projects } from '@/utils/supaQueries'
 import { columns } from '@/utils/tableColumns/projectsColumns'
+import { useProjectsStore } from '@/stores/loaders/projects'
+import { useCollabs } from '@/composables/collabs'
 
 usePageStore().pageData.title = 'Projects'
 
-const projects = ref<Projects | null>(null)
-
-const getProjects = async () => {
-  const { data, error } = await projectsQuery
-  if (error) {
-    console.log(error)
-  }
-  projects.value = data
-}
+const projectsLoader = useProjectsStore()
+const { projects } = storeToRefs(projectsLoader)
+const { getProjects } = projectsLoader
 
 await getProjects()
+
+const { getGroupedCollabs, groupedCollabs } = useCollabs()
+getGroupedCollabs(projects.value ?? [])
+
+const columnsWithCollabs = columns(groupedCollabs)
+
 </script>
 
 <style scoped></style>
