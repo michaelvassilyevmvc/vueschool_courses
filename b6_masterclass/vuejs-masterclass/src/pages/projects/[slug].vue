@@ -23,27 +23,28 @@ const collabs = project.value?.collaborators
 </script>
 
 <template>
+  <div>
   <Table v-if="project">
     <TableRow>
-      <TableHead> Name </TableHead>
+      <TableHead> Name</TableHead>
       <TableCell>
         <AppInPlaceEditText v-model="project.name" @commit="updateProject" />
       </TableCell>
     </TableRow>
     <TableRow>
-      <TableHead> Description </TableHead>
+      <TableHead> Description</TableHead>
       <TableCell>
         <AppInPlaceEditTextarea v-model="project.description" @commit="updateProject" />
       </TableCell>
     </TableRow>
     <TableRow>
-      <TableHead> Status </TableHead>
+      <TableHead> Status</TableHead>
       <TableCell>
         <AppInPlaceEditStatus v-model="project.status" @commit="updateProject" />
       </TableCell>
     </TableRow>
     <TableRow>
-      <TableHead> Collaborators </TableHead>
+      <TableHead> Collaborators</TableHead>
       <TableCell>
         <div class="flex">
           <Avatar
@@ -56,7 +57,7 @@ const collabs = project.value?.collaborators
               :to="{ name: '/users/[username]', params: { username: collab.username } }"
             >
               <AvatarImage :src="collab.avatar_url || ''" alt="" />
-              <AvatarFallback> </AvatarFallback>
+              <AvatarFallback></AvatarFallback>
             </RouterLink>
           </Avatar>
         </div>
@@ -71,9 +72,9 @@ const collabs = project.value?.collaborators
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead> Name </TableHead>
-              <TableHead> Status </TableHead>
-              <TableHead> Due Date </TableHead>
+              <TableHead> Name</TableHead>
+              <TableHead> Status</TableHead>
+              <TableHead> Due Date</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -94,7 +95,7 @@ const collabs = project.value?.collaborators
               <TableCell>
                 <AppInPlaceEditStatus :modelValue="task.status" readonly />
               </TableCell>
-              <TableCell> {{ task.due_date }} </TableCell>
+              <TableCell> {{ task.due_date }}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
@@ -123,7 +124,7 @@ const collabs = project.value?.collaborators
       </div>
     </div>
   </section>
-</template>
+</div></template>
 
 <style scoped>
 th {
