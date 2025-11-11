@@ -43,6 +43,9 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 
+import type { MenuInjectionOptions } from '@/utils/injectionKeys'
+import { menuKey } from '@/utils/injectionKeys'
+
 const router = useRouter()
 
 const executeAction = async (linkTitle: string) => {
@@ -93,7 +96,7 @@ const accountLinks = [
 
 defineEmits(['taskClicked'])
 
-const { menuOpen, toggleMenu } = useMenu()
+const { menuOpen, toggleMenu } = inject(menuKey) as MenuInjectionOptions
 const windowWidth = useWindowSize().width
 
 watchEffect(() => {
