@@ -29,9 +29,10 @@ class InventoryItem {
 
 class Product extends InventoryItem {
   color: string = 'gray'
-  size: Sizes | undefined
+   size: Sizes | undefined
 
 }
+
 
 class Service extends InventoryItem implements Emailable {
   startTime: Date
