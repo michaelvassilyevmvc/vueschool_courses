@@ -1,20 +1,10 @@
-interface Person {
-  name: string;
-  age: number;
+const reverse = (value: string | string[]) => {
+  if (typeof value === 'string') {
+    return value.split('').reverse().join('');
+  } else {
+    return [...value].reverse();
+  }
 }
 
-const me: Person = {
-  name: 'Juan',
-  age: 25
-}
-
-const clone = <T>(value: T): T => {
-  const json = JSON.stringify(value);
-  return JSON.parse(json)
-}
-
-const myClone = clone(me);
-
-const books: string[] = ['Harry Potter', 'Jurassic Park', 'The Dark Tower'];
-const bookCopies = clone<string[]>(books);
-bookCopies.push('Project Hail Mary');
+console.log(reverse('123'));
+console.log(reverse(['1', '2', '3']));
