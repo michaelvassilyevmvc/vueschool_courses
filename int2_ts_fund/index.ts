@@ -4,6 +4,12 @@ enum Sizes {
   large = 'large'
 }
 
+interface Emailable {
+  emailBody(): string,
+
+  emailSubject(): string
+}
+
 class InventoryItem {
   name: string
   price: number
@@ -13,8 +19,9 @@ class InventoryItem {
     this.price = price;
   }
 
+
   buy(): this {
-    alert(this.price);
+    console.log(this.price);
     return this
   }
 
@@ -26,7 +33,7 @@ class Product extends InventoryItem {
 
 }
 
-class Service extends InventoryItem {
+class Service extends InventoryItem implements Emailable {
   startTime: Date
   endTime: Date
 
@@ -36,6 +43,20 @@ class Service extends InventoryItem {
     this.startTime = startTime;
     this.endTime = endTime;
   }
+
+  emailBody(): string {
+    return `Thank you for purchasing ${this.name}!Your appointment starts at ${this.startTime.toLocaleTimeString()} and ends at ${this.endTime.toLocaleTimeString()}.`
+  }
+
+  emailSubject(): string {
+    return `${this.name} | My Company`
+  }
+}
+
+function sendEmail(emailable: Emailable, to: string) {
+  console.log('Body:', emailable.emailBody());
+  console.log('Subject::', emailable.emailSubject());
+  console.log('To:', to);
 }
 
 const tshirt = new Product('TShirt Design B', 10);
@@ -51,3 +72,5 @@ const photoShoot = new Service(
 )
 
 photoShoot.buy()
+
+sendEmail(photoShoot, 'rebusmv@gmail.com')
