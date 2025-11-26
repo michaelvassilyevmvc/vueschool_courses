@@ -17,7 +17,7 @@ console.log(user.id);
 <template>
   <main class="container m-auto p-10">
     <TheHeader />
-    <EntryEditor />
+    <EntryEditor  />
     <ul>
       <li>
         <EntryCard />
